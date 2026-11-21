@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: kursi-wars-multiplayer
+    runtime: node
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm run server
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_ORIGIN
+        sync: false
+  - type: web
+    name: kursi-wars-web
+    runtime: static
+    rootDir: .
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_SOCKET_URL
+        sync: false
